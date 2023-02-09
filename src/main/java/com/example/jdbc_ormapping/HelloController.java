@@ -1,20 +1,23 @@
 package com.example.jdbc_ormapping;
 
 import com.example.model.ConnectionHandler;
+import com.example.model.Person;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 import javax.xml.catalog.Catalog;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class HelloController {
-    public TableColumn tablecol_id;
+    public TableColumn<Person,Integer> tablecol_id;
     public TableView tableview;
     public Button btn_cancel;
     public Button btn_send;
@@ -29,11 +32,13 @@ public class HelloController {
     public Button btn_refresh;
 
     public void cancel(ActionEvent actionEvent) {
+        clear();
+    }
 
+    public void clear(){
         tf_id.setText("");
         tf_name.setText("");
         tf_wohnort.setText("");
-
     }
 
     public void send(ActionEvent actionEvent) throws SQLException {
@@ -45,6 +50,7 @@ public class HelloController {
                         String values = tf_id.getText() + "," + tf_name.getText() + "," + tf_wohnort.getText();
                         ConnectionHandler.getInstance().insertInto(values);
                         success();
+                        clear();
                     } else {
                         throw new Exception("Befüllen Sie bitte alle Textfelder");
                     }
@@ -62,15 +68,12 @@ public class HelloController {
 
     @FXML
     public void initialize() {
-        setAutosize();
+        tablecol_id.setCellValueFactory(new PropertyValueFactory<>("id"));
+        tablecol_name.setCellValueFactory(new PropertyValueFactory<>("name"));
+        tablecol_wohnort.setCellValueFactory(new PropertyValueFactory<>("wohnort"));
+
     }
 
-    public void setAutosize() {
-        vbox_labels.autosize();
-        vbox_textfield.autosize();
-        hbox_buttons.autosize();
-        tableview.autosize();
-    }
 
 
     public void error(String s) {
@@ -85,11 +88,10 @@ public class HelloController {
     }
 
     public void refresh(ActionEvent actionEvent) throws SQLException {
-        List<List<String>> list = ConnectionHandler.getInstance().refresh();
+        ArrayList<Person> list = ConnectionHandler.getInstance().refresh();
 
-        for (List<?> objects : list) {
-            tableview.setItems(FXCollections.observableList(list));
-        }
+        ObservableList<Person> observableList = FXCollections.observableList(list);
 
+        tableview.setItems(observableList);
     }
 }

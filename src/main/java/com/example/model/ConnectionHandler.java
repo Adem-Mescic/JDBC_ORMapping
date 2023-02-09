@@ -14,6 +14,8 @@ public class ConnectionHandler {
     String preparedSQLPerson = "insert into PERSON (id, name) values (?, ?)";
     String preparedSQLCity = "insert into ADRESSE (id, wohnort) values (?, ?)";
 
+    ArrayList<Person> list = new ArrayList<>();
+
     private Statement statement;
 
     private void setCon(Connection connection) {
@@ -39,11 +41,11 @@ public class ConnectionHandler {
         con.close();
     }
 
-    public ArrayList<List<String>> refresh() throws SQLException {
+    public ArrayList<Person> refresh() throws SQLException {
 
-        String statement = "select * from Person join Adresse USING(id)";
+        list.clear();
 
-        ArrayList<List<String>> list = new ArrayList<>();
+        String statement = "select * from Person join Adresse using(id)";
 
         PreparedStatement st = con.prepareStatement(statement);
 
@@ -51,14 +53,12 @@ public class ConnectionHandler {
 
         while (rs.next()){
 
-            List<String> temp = new LinkedList<>();
-            String id = String.valueOf(rs.getInt(0));
-            String name = rs.getString(1);
-            String city = rs.getString(2);
-            temp.add(id);
-            temp.add(name);
-            temp.add(city);
-            list.add(temp);
+            Person p = new Person();
+            p.setId(rs.getInt(1));
+            p.setName(rs.getString(2));
+            p.setWohnort(rs.getString(3));
+
+            list.add(p);
         }
 
         return list;
@@ -76,12 +76,13 @@ public class ConnectionHandler {
         System.out.println(values);
 
         st.setInt(1, Integer.parseInt(values[0]));
-        st.setString(2, values[0]);
+        st.setString(2, values[1]);
 
         stc.setInt(1,Integer.parseInt(values[0]));
         stc.setString(2,values[2]);
 
         int rs = st.executeUpdate();
+        rs = stc.executeUpdate();
 //        ResultSet rsc = stc.executeQuery();
 
 //        while (rs.next()){
