@@ -3,34 +3,34 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.jdbc_ormapping.HelloController">
    <children>
-      <TableView layoutX="256.0" layoutY="14.0" prefHeight="200.0" prefWidth="330.0">
+      <TableView fx:id="tableview" layoutX="256.0" layoutY="14.0" prefHeight="200.0" prefWidth="330.0">
         <columns>
-          <TableColumn prefWidth="75.0" text="ID" />
-          <TableColumn prefWidth="75.0" text="Name" />
-            <TableColumn prefWidth="75.0" text="Wohnort" />
+          <TableColumn fx:id="tablecol_id" prefWidth="75.0" text="ID" />
+          <TableColumn fx:id="tablecol_name" prefWidth="75.0" text="Name" />
+            <TableColumn fx:id="tablecol_wohnort" prefWidth="75.0" text="Wohnort" />
         </columns>
       </TableView>
-      <VBox layoutX="14.0" layoutY="14.0" prefHeight="200.0" prefWidth="100.0" spacing="21.0">
+      <VBox fx:id="vbox_labels" layoutX="14.0" layoutY="14.0" prefHeight="125.0" prefWidth="100.0" spacing="21.0">
          <children>
             <Label text="ID" />
             <Label text="Name" />
             <Label text="Wohnort" />
          </children>
       </VBox>
-      <VBox layoutX="125.0" layoutY="14.0" prefHeight="200.0" prefWidth="100.0" spacing="10.0">
+      <VBox fx:id="vbox_textfield" layoutX="125.0" layoutY="14.0" prefHeight="116.0" prefWidth="100.0" spacing="10.0">
          <children>
-            <TextField />
-            <TextField />
-            <TextField />
+            <TextField fx:id="tf_id" />
+            <TextField fx:id="tf_name" />
+            <TextField fx:id="tf_wohnort" />
          </children>
       </VBox>
-      <HBox layoutX="25.0" layoutY="156.0" prefHeight="100.0" prefWidth="200.0">
+      <HBox fx:id="hbox_buttons" layoutX="25.0" layoutY="156.0" prefHeight="100.0" prefWidth="185.0" spacing="15.0">
          <children>
-            <Button mnemonicParsing="false" text="Button" />
-            <Button mnemonicParsing="false" text="Button" />
+            <Button fx:id="btn_cancel" mnemonicParsing="false" onAction="#cancel" text="Cancel" />
+            <Button fx:id="btn_refresh" mnemonicParsing="false" onAction="#refresh" text="Refresh" />
+            <Button fx:id="btn_send" mnemonicParsing="false" onAction="#send" text="Send" />
          </children>
       </HBox>
    </children>

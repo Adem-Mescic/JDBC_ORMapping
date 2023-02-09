@@ -1,22 +1,24 @@
 package com.example.jdbc_ormapping;
 
+import com.example.model.ConnectionHandler;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 public class HelloApplication extends Application {
 
     @Override
     public void init() throws Exception {
-        super.init();
+        ConnectionHandler.getInstance().startConnection();
     }
 
     @Override
-    public void stop() throws Exception {
-        super.stop();
+    public void stop() throws SQLException {
+        ConnectionHandler.getInstance().stopConnection();
     }
 
     @Override
